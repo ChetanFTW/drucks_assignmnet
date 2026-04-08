@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from stl_parser import parse_stl, get_all_vertices
 from volume import compute_volume
 
@@ -41,3 +42,5 @@ bbox                      = compute_bounding_box(vertices)
 model_height, layer_count = compute_layer_count(bbox, layer_height=0.2)
 print_bounding_box_report(bbox, model_height, layer_count)
 
+=======
+>>>>>>> 2e1db67 (conflict resolve)
