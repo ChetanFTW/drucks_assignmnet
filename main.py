@@ -1,27 +1,31 @@
 from stl_parser import parse_stl, get_all_vertices
+from volume import compute_volume
 
 STL_FILE = "DrucksShoe.stl"
 
 # --- Parse ---
 triangles = parse_stl(STL_FILE)
+vertices  = get_all_vertices(triangles)
 
-# --- Extract vertices ---
-vertices = get_all_vertices(triangles)
+# --- Task 1: Volume ---
+print("\n--- Task 1: Volume Computation ---")
 
-# --- Sanity checks ---
-print(f"\n--- Parser Verification ---")
-print(f"Total triangles  : {len(triangles)}")
-print(f"Total vertices   : {len(vertices)}")   # must be triangles × 3
-print(f"Expected vertices: {len(triangles) * 3}")
+volume_mm3 = compute_volume(triangles)
 
-# --- Quick coordinate check ---
-# Grab all x, y, z values separately to spot-check
-all_x = [v[0] for v in vertices]
-all_y = [v[1] for v in vertices]
-all_z = [v[2] for v in vertices]
+# Convert to cm³ and liters for intuition check
+volume_cm3   = volume_mm3 / 1000.0
+volume_liter = volume_mm3 / 1_000_000.0
 
-print(f"\n--- Coordinate Ranges (raw check) ---")
-print(f"X  →  min: {min(all_x):.3f}   max: {max(all_x):.3f}")
-print(f"Y  →  min: {min(all_y):.3f}   max: {max(all_y):.3f}")
-print(f"Z  →  min: {min(all_z):.3f}   max: {max(all_z):.3f}")
+print(f"Volume : {volume_mm3:,.2f}  mm³")
+print(f"Volume : {volume_cm3:,.2f}  cm³")
+print(f"Volume : {volume_liter:.4f}  liters")
 
+# --- Sanity check ---
+# A typical shoe is roughly 200–400 cm³
+# If your number is wildly off, something is wrong
+print(f"\nSanity check:")
+print(f"  A real shoe is ~200–400 cm³")
+if 100 <= volume_cm3 <= 1000:
+    print(f"  {volume_cm3:.1f} cm³ looks reasonable for a shoe")
+else:
+    print(f"    {volume_cm3:.1f} cm³ seems off — check parser or formula")
