@@ -1,14 +1,7 @@
 # Drucks Technical Assessment
-**Candidate:** [Your Name]  
-**Date:** April 2026  
-**Language:** Python  
-**STL File:** DrucksShoe.stl (Rhinoceros Binary STL, 373,632 triangles)
-
----
 
 ## AI Tool Declaration
 I used Claude (claude.ai) throughout this assessment for:
-- Step by step guidance on implementation approach
 - Understanding signed tetrahedra math
 - Navigating OrcaSlicer codebase
 - Structuring this report
