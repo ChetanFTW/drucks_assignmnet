@@ -1,38 +1,119 @@
-# drucks_assignmnet
+# Drucks Technical Assessment
+**Candidate:** Chetan 
+**Date:** 09 April 2026  
+**Language:** Python 3  
 
-<h3 class="text-text-100 mt-2 -mb-1 text-base font-bold">Task 1: Volume Computation</h3>
-<p class="font-claude-response-body break-words whitespace-normal leading-[1.7]"><strong>Method — Signed Tetrahedra Decomposition</strong></p>
-<p class="font-claude-response-body break-words whitespace-normal leading-[1.7]">For every triangle on the surface with vertices v1, v2, v3, a tetrahedron is formed using the origin (0,0,0) as the fourth point. The signed volume of each tetrahedron is:</p>
-<div role="group" aria-label="Code" tabindex="0" class="relative group/copy bg-bg-000/50 border-0.5 border-border-400 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-100"><div class="sticky opacity-0 group-hover/copy:opacity-100 group-focus-within/copy:opacity-100 top-2 py-2 h-12 w-0 float-right"><div class="absolute right-0 h-8 px-2 items-center inline-flex z-10"><button class="inline-flex
-  items-center
-  justify-center
-  relative
-  isolate
-  shrink-0
-  can-focus
-  select-none
-  disabled:pointer-events-none
-  disabled:opacity-50
-  disabled:shadow-none
-  disabled:drop-shadow-none border-transparent
-          transition
-          font-base
-          duration-300
-          ease-[cubic-bezier(0.165,0.85,0.45,1)] h-8 w-8 rounded-md backdrop-blur-md _fill_1abo4_9 _ghost_1abo4_96" type="button" aria-label="Copy to clipboard" data-state="closed"><div class="relative"><div class="transition-all opacity-100 scale-100" style="width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="transition-all opacity-100 scale-100" aria-hidden="true" style="flex-shrink: 0;"><path d="M12.5 3A1.5 1.5 0 0 1 14 4.5V6h1.5A1.5 1.5 0 0 1 17 7.5v8a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 6 15.5V14H4.5A1.5 1.5 0 0 1 3 12.5v-8A1.5 1.5 0 0 1 4.5 3zm1.5 9.5a1.5 1.5 0 0 1-1.5 1.5H7v1.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5H14zM4.5 4a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5z"></path></svg></div><div class="absolute inset-0 flex items-center justify-center"><div class="transition-all opacity-0 scale-50" style="width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="transition-all opacity-0 scale-50" aria-hidden="true" style="flex-shrink: 0;"><path d="M15.188 5.11a.5.5 0 0 1 .752.626l-.056.084-7.5 9a.5.5 0 0 1-.738.033l-3.5-3.5-.064-.078a.501.501 0 0 1 .693-.693l.078.064 3.113 3.113 7.15-8.58z"></path></svg></div></div></div></button></div></div><div class="overflow-x-auto"><pre class="code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed p-3.5" style="color: rgb(234, 236, 240); background: transparent; font-family: var(--font-mono);"><code style="color: rgb(234, 236, 240); background: transparent; font-family: var(--font-mono); white-space: pre-wrap;"><span><span>V = (v1 · (v2 × v3)) / 6</span></span></code></pre></div></div>
-<p class="font-claude-response-body break-words whitespace-normal leading-[1.7]">Triangles facing outward contribute positive volume. Triangles facing inward contribute negative volume. Summed across all triangles of a closed mesh, the signed volumes cancel correctly and produce the true enclosed volume. Absolute value is taken at the end.</p>
-<p class="font-claude-response-body break-words whitespace-normal leading-[1.7]"><strong>Why it works:</strong> The scalar triple product <code class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]">v1 · (v2 × v3)</code> gives the volume of the parallelepiped formed by three vectors. A tetrahedron is exactly 1/6 of that. This is mathematically equivalent to integrating volume over the entire mesh, provable via the divergence theorem.</p>
-<p class="font-claude-response-body break-words whitespace-normal leading-[1.7]"><strong>Results:</strong></p>
-<div class="overflow-x-auto w-full px-2 mb-6">
+---
 
-</div>
+## Overview
+
+This project implements a minimal 3D printing pipeline analyzer
+for the Drucks technical assessment. It operates on a binary STL
+file of a shoe model and computes:
+
+- **Task 1:** Volume via signed tetrahedra decomposition
+- **Task 2:** Axis-aligned bounding box and layer count
+- **Task 3:** Perimeter-based print time estimation
+- **Task 4:** OrcaSlicer codebase analysis (documented in [REPORT.md](https://github.com/ChetanFTW/drucks_assignmnet/blob/master/Report.md))
+
+All core geometry is implemented from first principles.
+No geometry libraries are used — only Python's built-in
+`struct`, `math`, and `os` modules.
+
+---
+## Project Structure
+
+```bash
+drucks_assessment/
+│
+├── main.py          → Entry point, runs all tasks
+├── stl_parser.py    → Binary STL file parser
+├── volume.py        → Signed tetrahedra volume computation
+├── bounding_box.py  → Bounding box + layer count
+├── slicer.py        → Triangle-plane intersection + print time
+├── REPORT.md        → Full write-up with results and analysis
+└── README.md        → This file
+```
+---
+
+## Requirements
+
+- Python 3.10
+- No external libraries required
+- Standard library only: `struct`, `math`, `os`
+
+---
+
+## Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/ChetanFTW/drucks_assignmnet.git
+cd drucks_assessment
 
 
-| Metric                 | Value            |
-|-----------------------|------------------|
-| My computed volume    | 406,550.65 mm³   |
-| OrcaSlicer volume     | 406,547.00 mm³   |
-| Absolute difference   | 3.65 mm³         |
-| Percentage difference | 0.0009%          |
+```
 
-<p class="font-claude-response-body break-words whitespace-normal leading-[1.7]"><strong>Why the tiny difference exists:</strong>
-Floating point arithmetic across 373,632 triangles accumulates rounding error at the ~3 mm³ scale. This is expected and acceptable. OrcaSlicer likely uses the same signed tetrahedra method internally, which is why the numbers are virtually identical.</p>
+---
+
+## Usage
+
+```bash
+python main.py
+```
+
+This runs all three computational tasks against `DrucksShoe.stl`
+and prints a full report to stdout.
+
+---
+
+## Expected Output
+
+```bash
+Header: b'Rhinoceros Binary STL ( Aug  5 2025 )\r\n '
+Triangle count: 373632
+--- Task 1: Volume ---
+Volume : 406,550.65 mm³  (406.55 cm³)
+--- Task 2: Bounding Box ---
+X  →  min:     -6.953 mm    max:   282.610 mm    width : 289.563 mm
+Y  →  min:    -62.764 mm    max:    46.267 mm    width : 109.030 mm
+Z  →  min:     -6.377 mm    max:   109.869 mm    height: 116.247 mm
+--- Task 2: Layer Count ---
+Model height : 116.247 mm
+Layer height : 0.2 mm
+Layer count  : 581 complete layers
+--- Sanity Check vs OrcaSlicer ---
+OrcaSlicer reported: 289.563 x 109.03 x 116.247 mm
+Our computation    : 289.563 x 109.030 x 116.247 mm
+--- Task 3: Print Time Estimation ---
+Settings: speed=60mm/s  layer=0.2mm  walls=1  infill=0%
+Slicing layers............ done (581 layers)
+Total layers       : 581
+Total path length  : 408,752.6 mm
+Total path length  : 408.75 m
+Avg perimeter/layer: 703.5 mm
+⏱  Estimated print time: 1h 53m 32s
+(6813 seconds total)
+
+```
+---
+
+## Results vs OrcaSlicer
+
+| Task | Metric | Ours | OrcaSlicer | Difference |
+|---|---|---|---|---|
+| Task 1 | Volume | 406,550.65 mm³ | 406,547 mm³ | 0.0009% |
+| Task 2 | X width | 289.563 mm | 289.563 mm | 0.000% |
+| Task 2 | Y width | 109.030 mm | 109.030 mm | 0.000% |
+| Task 2 | Z height | 116.247 mm | 116.247 mm | 0.000% |
+| Task 2 | Layers | 581 | 581 | 0 |
+| Task 3 | Print time | 1h 53m 32s | 1h 57m (outer wall) | ~3% |
+
+---
+
+## How It Works
+
+### STL Parser (`stl_parser.py`)
+Reads binary STL format directly using Python's `struct` module.
+Each triangle is 50 bytes: 12 bytes normal (ignored) +
+3 × 12 bytes vertices + 2 bytes
