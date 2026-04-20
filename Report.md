@@ -113,6 +113,7 @@ layer count and print quality significantly.
 ## Task 3: Print Time Estimation
 
 ### Formula
+```cpp
 Print Time = Σ perimeter(z_i) / print_speed
 where:
 z_i            = Z height of layer i
@@ -121,6 +122,7 @@ intersection segments at z_i
 print_speed    = 60 mm/s
 layer_height   = 0.2 mm
 wall count     = 1
+```
 
 ### Method
 
